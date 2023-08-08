@@ -47,7 +47,7 @@ class BaseModelTest(unittest.TestCase):
 
     def test_base_str(self):
         self.assertNotEqual(len(str(self.bm)), 0)
-        self.assertRegex(str(self.bm), ".+")  # write a better regex
+        self.assertRegex(str(self.bm), r"^\[[a-z-A-Z]+\] \(.+\) {.+}$")
 
     def test_base_init_r1(self):
         self.assertTrue(BaseModel())
