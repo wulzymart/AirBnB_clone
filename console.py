@@ -21,14 +21,13 @@ class HBNBCommand(cmd.Cmd):
     Entry point into the console
     """
     prompt = "(hbnb) "
-    class_list = {"BaseModel":BaseModel, "User": User,
+    class_list = {"BaseModel": BaseModel, "User": User,
                   "State": State, "City": City,
                   "Amenity": Amenity, "Place": Place,
                   "Review": Review}
 
     def do_quit(self, line):
         """Quits and exit the program"""
-        print()
         return True
 
     def do_EOF(self, line):
@@ -46,20 +45,33 @@ class HBNBCommand(cmd.Cmd):
         """Preliminary preparations before executing command"""
         line = line.strip()
         # check wether the line is in the dot notation format
-        match = re.match('\w+\.\w+\(.*\)', line)
+        match = re.match(r'\w+\.\w+\(.*\)', line)
         if match:
-            args = re.findall("[\w-]+", match.group())
+            args = re.findall(r"[\w-]+", match.group())
             # swap the command and the class name
             args[0], args[1] = args[1], args[0]
             line = " ".join(args)
 
         if not sys.stdin.isatty() and line and line.split()[0]\
-           not in ["EOF", "quit"]:
+           not in ["EOF"]:
             print()
         else:
             pass
 
         return line
+
+    def do_count(self, args):
+        """Count the number of instances in the storage system"""
+        arg_list = args.split()
+        all_objs = models.storage.all()
+        models.storage.reload()
+        if arg_list and arg_list[0] in type(self).class_list:
+            arg1 = arg_list[0]
+            cls_name = arg_list[0]
+            print(len([str(v) for k, v in all_objs.items() if
+                       k.startswith(cls_name)]))
+        else:
+            print(len([str(i) for i in all_objs.values()]))
 
     def do_create(self, args):
         """Creates a new instance of BaseModel"""
@@ -89,7 +101,7 @@ class HBNBCommand(cmd.Cmd):
         if arg_list and arg_list[0] in type(self).class_list:
             arg1 = arg_list[0]
             cls_name = arg_list[0]
-            print([str(v) for k, v in all_objs.items() if\
+            print([str(v) for k, v in all_objs.items() if
                    k.startswith(cls_name)])
         else:
             print([str(i) for i in all_objs.values()])
@@ -180,7 +192,7 @@ class HBNBCommand(cmd.Cmd):
 
         for attr_idx in range(2, len(arg_list), 2):
             try:
-                setattr(obj, arg_list[attr_idx],
+                setattr(obj, arg_list[attr_idx].strip('"'),
                         arg_list[attr_idx + 1].strip('"'))
             except IndexError as ie:
                 print("** value missing **")
