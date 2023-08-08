@@ -57,13 +57,13 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, args):
         """Creates a new instance of BaseModel"""
         arg_list = args.split()
-        if len(arg_list) > 1 and arg1.lower() in  type(self).class_list:
+        if len(arg_list) > 1 and arg1.lower() in type(self).class_list:
             arg1 = arg_list[0]
             # print all instances of the supplied list
 
         else:
             # print all instances due to NULL class name
-            pass #remove this after adding the implementation
+            pass  # remove this after adding the implementation
 
     def do_show(self, args):
         """
@@ -81,8 +81,8 @@ class HBNBCommand(cmd.Cmd):
             return False
 
         if len(arg_list) < 2:
-           print("** instance id missing **")
-           return False
+            print("** instance id missing **")
+            return False
 
         arg2 = arg_list[1]
         # Add check for wether there is an object with the supplied ID
@@ -104,8 +104,8 @@ class HBNBCommand(cmd.Cmd):
 
         arg2 = arg_list[1]
         if len(arg_list) < 2:
-           print("** instance id missing **")
-           return False
+            print("** instance id missing **")
+            return False
         # Add check for wether there is an object with the supplied ID
         # Do not forget implementation to print the output if it meets
         # all condition
@@ -123,8 +123,8 @@ class HBNBCommand(cmd.Cmd):
             return False
 
         if len(arg_list) < 2:
-           print("** instance id missing **")
-           return False
+            print("** instance id missing **")
+            return False
 
         arg2 = arg_list[1]
         # Add check for wether there is an object with the supplied ID
@@ -137,6 +137,7 @@ class HBNBCommand(cmd.Cmd):
         if len(arg_list) < 4:
             print("** value missing **")
             return False
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
