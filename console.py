@@ -4,6 +4,7 @@ This module contains the class that serves as the entry point to the command
 interpreter
 """
 import cmd
+import re
 import sys
 
 
@@ -12,8 +13,8 @@ class HBNBCommand(cmd.Cmd):
     Entry point into the console
     """
     prompt = "(hbnb) "
-    class_list = ["basemodel", "user", "state", "city", "amenity",
-                  "place", "review"]
+    class_list = ["BaseModel", "User", "State", "City", "Amenity",
+                  "Place", "Review"]
 
     def do_quit(self, line):
         """Quits and exit the program"""
@@ -34,11 +35,21 @@ class HBNBCommand(cmd.Cmd):
     def precmd(self, line):
         """Preliminary preparations before executing command"""
         line = line.strip()
+        # check wether the line is in the dot notation format
+        match = re.match('\w+\.\w+\(.*\)', line)
+        if match:
+            args = re.findall("[\w-]+", match.group())
+            # swap the command and the class name
+            args[0], args[1] = args[1], args[0]
+            line = " ".join(args)
+            print(line) # To be removed
+
         if not sys.stdin.isatty() and line and line.split()[0]\
            not in ["EOF", "quit"]:
             print()
         else:
             pass
+
         return line
 
     def do_create(self, args):
@@ -55,9 +66,12 @@ class HBNBCommand(cmd.Cmd):
         # Do not forget the other functionalities
 
     def do_all(self, args):
-        """Creates a new instance of BaseModel"""
+        """
+        Print string representation of all instances based or not on the
+        class name
+        """
         arg_list = args.split()
-        if len(arg_list) > 1 and arg1.lower() in type(self).class_list:
+        if len(arg_list) > 1 and arg1 in type(self).class_list:
             arg1 = arg_list[0]
             # print all instances of the supplied list
 
@@ -76,7 +90,7 @@ class HBNBCommand(cmd.Cmd):
             return False
 
         arg1 = arg_list[0]
-        if arg1.lower() not in type(self).class_list:
+        if arg1 not in type(self).class_list:
             print("** class doesn't exist **")
             return False
 
@@ -98,7 +112,7 @@ class HBNBCommand(cmd.Cmd):
             return False
 
         arg1 = arg_list[0]
-        if arg1.lower() not in type(self).class_list:
+        if arg1 not in type(self).class_list:
             print("** class doesn't exist **")
             return False
 
@@ -118,7 +132,7 @@ class HBNBCommand(cmd.Cmd):
             return False
 
         arg1 = arg_list[0]
-        if arg1.lower() not in type(self).class_list:
+        if arg1 not in type(self).class_list:
             print("** class doesn't exist **")
             return False
 
