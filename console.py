@@ -47,13 +47,20 @@ class HBNBCommand(cmd.Cmd):
         # check wether the line is in the dot notation format
         match = re.match(r'\w+\.\w+\(.*\)', line)
         if match:
-            args = re.findall(r"[\w-]+", match.group())
+            # search line and split the dot.notation line into arg1.arg2(arg3)
+            args = re.search(r"([\w]+)\.([\w]+)\((.*?)\)",
+                             match.group()).groups()
+            args = list(args)
             # swap the command and the class name
             args[0], args[1] = args[1], args[0]
+            in_brak = args[2]  # match characters in bracket
+            if in_brak:
+                args = args[:2] + re.findall(r'"?([\w\s-]+)"?', in_brak)
+                args = ['"' + i + '"' if len(i.split()) > 1 else i.strip()
+                        for i in args if not i.isspace()]
             line = " ".join(args)
 
-        if not sys.stdin.isatty() and line and line.split()[0]\
-           not in ["EOF"]:
+        if not sys.stdin.isatty() and line and line.split()[0] not in ["EOF"]:
             print()
         else:
             pass
@@ -92,8 +99,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, args):
         """
-        Print string representation of all instances based or not on the
-        class name
+        Print string representation of all instances based or not on
+        the class name
         """
         arg_list = args.split()
         all_objs = storage.all()
@@ -159,11 +166,12 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
             return False
         del storage.all()[key]
+        storage.save()
         storage.reload()
 
     def do_update(self, args):
         """Updates an instance based on the class name"""
-        arg_list = args.split()
+        arg_list = re.findall(r'"[^"]*"|\S+', args)
         if len(arg_list) < 1:
             print("** class name missing **")
             return False
