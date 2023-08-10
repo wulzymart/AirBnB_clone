@@ -6,7 +6,7 @@ interpreter
 import cmd
 import re
 import sys
-import models
+from models import storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -63,8 +63,8 @@ class HBNBCommand(cmd.Cmd):
     def do_count(self, args):
         """Count the number of instances in the storage system"""
         arg_list = args.split()
-        all_objs = models.storage.all()
-        models.storage.reload()
+        all_objs = storage.all()
+        storage.reload()
         if arg_list and arg_list[0] in type(self).class_list:
             arg1 = arg_list[0]
             cls_name = arg_list[0]
@@ -85,9 +85,9 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return False
         obj = type(self).class_list[arg_list[0]]()
-        models.storage.new(obj)
+        storage.new(obj)
         obj.save()
-        models.storage.reload()
+        storage.reload()
         print(obj.id)
 
     def do_all(self, args):
@@ -96,8 +96,8 @@ class HBNBCommand(cmd.Cmd):
         class name
         """
         arg_list = args.split()
-        all_objs = models.storage.all()
-        models.storage.reload()
+        all_objs = storage.all()
+        storage.reload()
         if arg_list and arg_list[0] in type(self).class_list:
             arg1 = arg_list[0]
             cls_name = arg_list[0]
@@ -127,8 +127,8 @@ class HBNBCommand(cmd.Cmd):
 
         id = arg_list[1]
         key = ".".join([class_name, id])
-        models.storage.reload()
-        all_objs = models.storage.all()
+        storage.reload()
+        all_objs = storage.all()
         if key in all_objs:
             print(all_objs[key])
         else:
@@ -153,13 +153,13 @@ class HBNBCommand(cmd.Cmd):
         id = arg_list[1]
 
         key = ".".join([class_name, id])
-        models.storage.reload()
-        all_objs = models.storage.all()
+        storage.reload()
+        all_objs = storage.all()
         if key not in all_objs:
             print("** no instance found **")
             return False
-        del models.storage.all()[key]
-        models.storage.reload()
+        del storage.all()[key]
+        storage.reload()
 
     def do_update(self, args):
         """Updates an instance based on the class name"""
@@ -179,8 +179,8 @@ class HBNBCommand(cmd.Cmd):
         id = arg_list[1]
 
         key = ".".join([class_name, id])
-        models.storage.reload()
-        all_objs = models.storage.all()
+        storage.reload()
+        all_objs = storage.all()
         if key not in all_objs:
             print("** no instance found **")
             return False
