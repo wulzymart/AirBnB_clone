@@ -15,6 +15,14 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
+def check_flt(val):
+    """Check wether a val is a float"""
+    try:
+        float(val)
+        return True
+    except:
+        return False
+
 
 class HBNBCommand(cmd.Cmd):
     """
@@ -55,9 +63,8 @@ class HBNBCommand(cmd.Cmd):
             args[0], args[1] = args[1], args[0]
             in_brak = args[2]  # match characters in bracket
             if in_brak:
-                args = args[:2] + re.findall(r'"?([\w\s-]+)"?', in_brak)
-                args = ['"' + i + '"' if len(i.split()) > 1 else i.strip()
-                        for i in args if not i.isspace()]
+                args = args[:2] + re.findall(r'"[^"]+"|[\w.]+', in_brak)
+                args[2] = args[2].strip('"')
             line = " ".join(args)
 
         if not sys.stdin.isatty() and line and line.split()[0] not in ["EOF"]:
@@ -77,6 +84,8 @@ class HBNBCommand(cmd.Cmd):
             cls_name = arg_list[0]
             print(len([str(v) for k, v in all_objs.items() if
                        k.startswith(cls_name)]))
+        elif arg_list and arg_list[0] not in type(self).class_list:
+            print("** class doesn't exist **")
         else:
             print(len([str(i) for i in all_objs.values()]))
 
@@ -110,6 +119,8 @@ class HBNBCommand(cmd.Cmd):
             cls_name = arg_list[0]
             print([str(v) for k, v in all_objs.items() if
                    k.startswith(cls_name)])
+        elif arg_list and arg_list[0] not in type(self).class_list:
+            print("** class doesn't exist **")
         else:
             print([str(i) for i in all_objs.values()])
 
@@ -197,14 +208,20 @@ class HBNBCommand(cmd.Cmd):
         if len(arg_list) < 3:
             print("** attribute name missing **")
             return False
+        attr = arg_list[2].strip('"')
 
-        for attr_idx in range(2, len(arg_list), 2):
-            try:
-                setattr(obj, arg_list[attr_idx].strip('"'),
-                        arg_list[attr_idx + 1].strip('"'))
-            except IndexError as ie:
-                print("** value missing **")
-                return False
+        try:
+            val = arg_list[3]
+            if not val.startswith('"') and val.isdigit():
+                val = int(val)
+            elif not val.startswith('"') and  check_flt(val):
+                val = float(val)
+            else:
+                val = val.strip('"')
+            setattr(obj, attr, val)
+        except IndexError as ie:
+            print("** value missing **")
+            return False
         obj.save()
 
 
