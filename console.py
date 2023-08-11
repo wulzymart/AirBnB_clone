@@ -15,12 +15,13 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
+
 def check_flt(val):
     """Check wether a val is a float"""
     try:
         float(val)
         return True
-    except:
+    except ValueError:
         return False
 
 
@@ -65,7 +66,7 @@ class HBNBCommand(cmd.Cmd):
             if in_brak:
                 args = args[:2] + re.findall(r'"[^"]+"|[\w.]+', in_brak)
                 args[2] = args[2].strip('"')
-            line = " ".join(args)
+            line = " ".join(args + ['*'])
 
         if not sys.stdin.isatty() and line and line.split()[0] not in ["EOF"]:
             print()
@@ -208,21 +209,26 @@ class HBNBCommand(cmd.Cmd):
         if len(arg_list) < 3:
             print("** attribute name missing **")
             return False
-        attr = arg_list[2].strip('"')
 
-        try:
-            val = arg_list[3]
-            if not val.startswith('"') and val.isdigit():
-                val = int(val)
-            elif not val.startswith('"') and  check_flt(val):
-                val = float(val)
-            else:
-                val = val.strip('"')
-            setattr(obj, attr, val)
-        except IndexError as ie:
-            print("** value missing **")
-            return False
-        obj.save()
+        if arg_list[-1] != "*" and len(arg_list) > 4:
+            arg_list = arg_list[:4]
+        else:
+            arg_list = arg_list[:-1]
+        for idx in range(2, len(arg_list), 2):
+            try:
+                attr = arg_list[idx].strip('"')
+                val = arg_list[idx + 1]
+                if not val.startswith('"') and val.isdigit():
+                    val = int(val)
+                elif not val.startswith('"') and check_flt(val):
+                    val = float(val)
+                else:
+                    val = val.strip('"')
+                setattr(obj, attr, val)
+                obj.save()
+            except IndexError as ie:
+                print("** value missing **")
+                return False
 
 
 if __name__ == "__main__":
