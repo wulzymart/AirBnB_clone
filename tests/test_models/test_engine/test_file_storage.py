@@ -110,7 +110,6 @@ class FileStorageTest(unittest.TestCase):
         """test wether file path exists"""
         with self.assertRaises(AttributeError):
             FileStorage.__filepath
-            FiileStorage.__objects
 
     def test_file_reload(self):
         """test wether reload works properly"""
@@ -127,6 +126,11 @@ class FileStorageTest(unittest.TestCase):
     def test_file_all(self):
         """test wether all works properly"""
         self.assertTrue(FileStorage().all())
+
+    def test_file_path(self):
+        """test wether file path exists"""
+        with self.assertRaises(AttributeError):
+            FileStorage.__objects
 
     def tearDown(self):
         """Unset variables"""
