@@ -6,6 +6,7 @@ This module contains the various test cases for the base module
 
 import datetime
 from models import base_model
+from models import city
 from models import storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -30,7 +31,7 @@ class BaseModelTest(unittest.TestCase):
         Make an instance of the base model class to be used for testing
         out the class
         """
-        self.bm = BaseModel()
+        self.bm = City()
         try:
             os.rename("file.json", "tmp")
         except Exception:
@@ -38,7 +39,7 @@ class BaseModelTest(unittest.TestCase):
 
     def test_mod_doc(self):
         """Test module documentation"""
-        self.assertNotEqual(len(base_model.__doc__.split()), 0)
+        self.assertNotEqual(len(city.__doc__.split()), 0)
 
     def test_base_doc(self):
         """Test class doc"""
@@ -64,7 +65,7 @@ class BaseModelTest(unittest.TestCase):
 
     def test_base_init_r1(self):
         """Test case"""
-        self.assertTrue(BaseModel())
+        self.assertTrue(City())
 
     def test_base_init_r2(self):
         """Test case"""
@@ -79,25 +80,25 @@ class BaseModelTest(unittest.TestCase):
 
     def test_instance(self):
         """Test if it produces an instance"""
-        b = BaseModel()
+        b = City()
         self.assertTrue(isinstance(b, BaseModel))
 
     def test_uuid(self):
         """test uid"""
-        b1 = BaseModel()
-        b2 = BaseModel()
+        b1 = City()
+        b2 = City()
         self.assertTrue(isinstance(b1.id, str))
         self.assertFalse(b1.id == b2.id)
 
     def test_created_at(self):
         """tests createdat and updated_at"""
-        b = BaseModel()
+        b = City()
         self.assertIsInstance(b.created_at, datetime.datetime)
         self.assertIsInstance(b.updated_at, datetime.datetime)
 
     def test_save(self):
         """tests the save function"""
-        b = BaseModel()
+        b = City()
         init = b.updated_at
         sleep(1)
         b.save()
