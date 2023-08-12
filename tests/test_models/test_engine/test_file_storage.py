@@ -20,7 +20,7 @@ from time import sleep
 import unittest
 
 
-class BaseModelTest(unittest.TestCase):
+class FileStorageTest(unittest.TestCase):
     """
     This class contains various test cases to test the BaseModel class
     """
