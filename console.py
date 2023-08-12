@@ -182,7 +182,9 @@ class HBNBCommand(cmd.Cmd):
         storage.reload()
 
     def do_update(self, args):
-        """Updates an instance based on the class name"""
+        """
+        Updates an instance based on the class name
+        """
         arg_list = re.findall(r'"[^"]*"|\S+', args)
         if len(arg_list) < 1:
             print("** class name missing **")

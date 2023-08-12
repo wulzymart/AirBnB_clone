@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Module containing file storage engine"""
+"""
+Module containing file storage engine
+"""
 
 
 import json
@@ -34,26 +36,34 @@ class FileStorage:
     }
 
     def all(self):
-        """returns the __object dictionary"""
+        """
+        returns the __object dictionary
+        """
         return FileStorage.__objects
 
     def new(self, obj):
-        """adds a new object to the dictionary"""
+        """
+        adds a new object to the dictionary
+        """
         obj_class_name = obj.__class__.__name__
         obj_id = "{}.{}".format(obj_class_name, obj.id)
         FileStorage.__objects[obj_id] = obj
 
     def save(self):
-        """saves __object to file"""
+        """
+        saves __object to file
+        """
         obj_to_dicts = {key: val.to_dict()
                         for key, val in FileStorage.__objects.items()}
         with open(FileStorage.__file_path, "w", encoding="utf-8") as file:
             json.dump(obj_to_dicts, file)
 
     def reload(self):
-        """deserializes the JSON file to __objects
+        """
+        deserializes the JSON file to __objects
         (only if the JSON file (__file_path) exists;
-        otherwise, do nothing)"""
+        otherwise, do nothing)
+        """
         try:
             with open(FileStorage.__file_path, "r", encoding="utf-8") as file:
                 obj_of_dicts = json.load(file)

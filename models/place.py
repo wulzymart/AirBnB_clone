@@ -1,10 +1,14 @@
 #!/usr/bin/python3
-"""Module containing the Place class."""
+"""
+Module containing the Place class.
+"""
 from models.base_model import BaseModel
 
 
 class Place(BaseModel):
-    """Class for place"""
+    """
+    Class for place
+    """
 
     city_id = ""
     user_id = ""
