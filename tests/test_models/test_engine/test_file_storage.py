@@ -110,6 +110,7 @@ class FileStorageTest(unittest.TestCase):
         """test wether file path exists"""
         with self.assertRaises(AttributeError):
             FileStorage.__filepath
+            FiileStorage.__objects
 
     def test_file_reload(self):
         """test wether reload works properly"""
