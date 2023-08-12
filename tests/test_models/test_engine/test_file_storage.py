@@ -106,6 +106,27 @@ class FileStorageTest(unittest.TestCase):
         with self.assertRaises(TypeError):
             b.save(None)
 
+    def test_file_path(self):
+        """test wether file path exists"""
+        with self.assertRaises(AttributeError):
+            FileStorage.__filepath
+
+    def test_file_reload(self):
+        """test wether reload works properly"""
+        self.assertFalse(FileStorage().reload())
+
+    def test_file_save(self):
+        """test wether save works properly"""
+        self.assertFalse(FileStorage().save())
+
+    def test_file_new(self):
+        """test wehter new works properly"""
+        self.assertFalse(FileStorage().new(BaseModel()))
+
+    def test_file_all(self):
+        """test wether all works properly"""
+        self.assertTrue(FileStorage().all())
+
     def tearDown(self):
         """Unset variables"""
         try:
