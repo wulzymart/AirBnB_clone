@@ -214,6 +214,9 @@ class HBNBCommand(cmd.Cmd):
 
         if arg_list[-1] != "*" and len(arg_list) > 4:
             arg_list = arg_list[:4]
+        elif arg_list[-1] != "*" and len(arg_list) == 3:
+            print("** value missing **")
+            return False
         else:
             arg_list = arg_list[:-1]
         for idx in range(2, len(arg_list), 2):
