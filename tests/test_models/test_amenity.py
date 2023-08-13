@@ -5,17 +5,8 @@ This module contains the various test cases for the base module
 
 
 import datetime
-from models import base_model
-from models import storage
 from models import amenity
 from models.amenity import Amenity
-from models.base_model import BaseModel
-from models.city import City
-from models.place import Place
-from models.review import Review
-from models.state import State
-from models.user import User
-from models.engine.file_storage import FileStorage
 import os
 from time import sleep
 import unittest

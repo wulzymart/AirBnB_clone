@@ -5,16 +5,8 @@ This module contains the various test cases for the base module
 
 
 import datetime
-from models import base_model
-from models import storage
-from models.amenity import Amenity
-from models.base_model import BaseModel
-from models.city import City
-from models.place import Place
-from models.review import Review
-from models.state import State
+from models import user
 from models.user import User
-from models.engine.file_storage import FileStorage
 import os
 from time import sleep
 import unittest
@@ -30,7 +22,7 @@ class BaseModelTest(unittest.TestCase):
         Make an instance of the base model class to be used for testing
         out the class
         """
-        self.bm = BaseModel()
+        self.u = User()
         try:
             os.rename("file.json", "tmp")
         except Exception:
@@ -38,66 +30,54 @@ class BaseModelTest(unittest.TestCase):
 
     def test_mod_doc(self):
         """Test module documentation"""
-        self.assertNotEqual(len(base_model.__doc__.split()), 0)
+        self.assertNotEqual(len(user.__doc__.split()), 0)
 
-    def test_base_doc(self):
+    def test_doc(self):
         """Test class doc"""
-        self.assertNotEqual(len(self.bm.__doc__.split()), 0)
+        self.assertNotEqual(len(self.u.__doc__.split()), 0)
 
-    def test_base_save(self):
+    def test_save(self):
         """Test class doc"""
-        self.assertNotEqual(len(self.bm.save.__doc__.split()), 0)
+        self.assertNotEqual(len(self.u.save.__doc__.split()), 0)
 
-    def test_base_to_dict(self):
+    def test_to_dict(self):
         """Test class doc"""
-        test_dict = self.bm.to_dict()
-        self.assertNotEqual(len(self.bm.to_dict.__doc__.split()), 0)
+        test_dict = self.u.to_dict()
+        self.assertNotEqual(len(self.u.to_dict.__doc__.split()), 0)
         self.assertIsInstance(test_dict, dict)
         self.assertIn("__class__", test_dict)
         self.assertIsInstance(test_dict["created_at"], str)
         self.assertIsInstance(test_dict["updated_at"], str)
 
-    def test_base_str(self):
+    def test_str(self):
         """Test class doc"""
-        self.assertNotEqual(len(str(self.bm)), 0)
-        self.assertRegex(str(self.bm), r"^\[[a-z-A-Z]+\] \(.+\) {.+}$")
+        self.assertNotEqual(len(str(self.u)), 0)
+        self.assertRegex(str(self.u), r"^\[[a-z-A-Z]+\] \(.+\) {.+}$")
 
-    def test_base_init_r1(self):
+    def test_user_init_r1(self):
         """Test case"""
-        self.assertTrue(BaseModel())
+        self.assertTrue(User())
 
-    def test_base_init_r2(self):
+    def test_user_init_r2(self):
         """Test case"""
-        dic = self.bm.to_dict()
-        b = BaseModel(**dic)
-        self.assertTrue(b != self.bm)
+        dic = self.u.to_dict()
+        b = User(**dic)
+        self.assertTrue(b != self.u)
 
-    def test_base_init_r3(self):
+    def test_user_init_r3(self):
         """Test case"""
-        b = BaseModel(5)
-        self.assertTrue(BaseModel(5))
-
-    def test_instance(self):
-        """Test if it produces an instance"""
-        b = BaseModel()
-        self.assertTrue(isinstance(b, BaseModel))
-
-    def test_uuid(self):
-        """test uid"""
-        b1 = BaseModel()
-        b2 = BaseModel()
-        self.assertTrue(isinstance(b1.id, str))
-        self.assertFalse(b1.id == b2.id)
+        b = User(5)
+        self.assertTrue(User(5))
 
     def test_created_at(self):
         """tests createdat and updated_at"""
-        b = BaseModel()
+        b = User()
         self.assertIsInstance(b.created_at, datetime.datetime)
         self.assertIsInstance(b.updated_at, datetime.datetime)
 
     def test_save(self):
         """tests the save function"""
-        b = BaseModel()
+        b = User()
         init = b.updated_at
         sleep(1)
         b.save()

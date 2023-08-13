@@ -5,25 +5,16 @@ This module contains the various test cases for the base module
 
 
 import datetime
-from models import base_model
 from models import city
-from models import storage
-from models.amenity import Amenity
-from models.base_model import BaseModel
 from models.city import City
-from models.place import Place
-from models.review import Review
-from models.state import State
-from models.user import User
-from models.engine.file_storage import FileStorage
 import os
 from time import sleep
 import unittest
 
 
-class BaseModelTest(unittest.TestCase):
+class CityTest(unittest.TestCase):
     """
-    This class contains various test cases to test the BaseModel class
+    This class contains various test cases to test the City class
     """
 
     def setUp(self):
@@ -70,18 +61,18 @@ class BaseModelTest(unittest.TestCase):
     def test_base_init_r2(self):
         """Test case"""
         dic = self.bm.to_dict()
-        b = BaseModel(**dic)
+        b = City(**dic)
         self.assertTrue(b != self.bm)
 
     def test_base_init_r3(self):
         """Test case"""
-        b = BaseModel(5)
-        self.assertTrue(BaseModel(5))
+        b = City(5)
+        self.assertTrue(City(5))
 
     def test_instance(self):
         """Test if it produces an instance"""
         b = City()
-        self.assertTrue(isinstance(b, BaseModel))
+        self.assertTrue(isinstance(b, City))
 
     def test_uuid(self):
         """test uid"""

@@ -5,24 +5,16 @@ This module contains the various test cases for the base module
 
 
 import datetime
-from models import base_model
-from models import storage
-from models.amenity import Amenity
-from models.base_model import BaseModel
-from models.city import City
-from models.place import Place
+from models import review
 from models.review import Review
-from models.state import State
-from models.user import User
-from models.engine.file_storage import FileStorage
 import os
 from time import sleep
 import unittest
 
 
-class BaseModelTest(unittest.TestCase):
+class ReviewTest(unittest.TestCase):
     """
-    This class contains various test cases to test the BaseModel class
+    This class contains various test cases to test the Review class
     """
 
     def setUp(self):
@@ -30,7 +22,7 @@ class BaseModelTest(unittest.TestCase):
         Make an instance of the base model class to be used for testing
         out the class
         """
-        self.bm = BaseModel()
+        self.bm = Review()
         try:
             os.rename("file.json", "tmp")
         except Exception:
@@ -38,7 +30,7 @@ class BaseModelTest(unittest.TestCase):
 
     def test_mod_doc(self):
         """Test module documentation"""
-        self.assertNotEqual(len(base_model.__doc__.split()), 0)
+        self.assertNotEqual(len(review.__doc__.split()), 0)
 
     def test_base_doc(self):
         """Test class doc"""
@@ -64,40 +56,40 @@ class BaseModelTest(unittest.TestCase):
 
     def test_base_init_r1(self):
         """Test case"""
-        self.assertTrue(BaseModel())
+        self.assertTrue(Review())
 
     def test_base_init_r2(self):
         """Test case"""
         dic = self.bm.to_dict()
-        b = BaseModel(**dic)
+        b = Review(**dic)
         self.assertTrue(b != self.bm)
 
     def test_base_init_r3(self):
         """Test case"""
-        b = BaseModel(5)
-        self.assertTrue(BaseModel(5))
+        b = Review(5)
+        self.assertTrue(Review(5))
 
     def test_instance(self):
         """Test if it produces an instance"""
-        b = BaseModel()
-        self.assertTrue(isinstance(b, BaseModel))
+        b = Review()
+        self.assertTrue(isinstance(b, Review))
 
     def test_uuid(self):
         """test uid"""
-        b1 = BaseModel()
-        b2 = BaseModel()
+        b1 = Review()
+        b2 = Review()
         self.assertTrue(isinstance(b1.id, str))
         self.assertFalse(b1.id == b2.id)
 
     def test_created_at(self):
         """tests createdat and updated_at"""
-        b = BaseModel()
+        b = Review()
         self.assertIsInstance(b.created_at, datetime.datetime)
         self.assertIsInstance(b.updated_at, datetime.datetime)
 
     def test_save(self):
         """tests the save function"""
-        b = BaseModel()
+        b = Review()
         init = b.updated_at
         sleep(1)
         b.save()
