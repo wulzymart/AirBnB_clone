@@ -98,6 +98,13 @@ class ReviewTest(unittest.TestCase):
         with self.assertRaises(TypeError):
             b.save(None)
 
+    def test_review_attr(self):
+        """test the reviews attributes"""
+        obj = Review()
+        self.assertEqual(obj.place_id, "")
+        self.assertEqual(obj.user_id, "")
+        self.assertEqual(obj.text, "")
+
     def tearDown(self):
         """Unset variables"""
         try:
