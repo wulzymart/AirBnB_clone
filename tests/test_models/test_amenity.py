@@ -98,6 +98,11 @@ class AmenityTest(unittest.TestCase):
         with self.assertRaises(TypeError):
             b.save(None)
 
+    def test_amenity_attr_name(self):
+        """test amenity name attribute"""
+        obj = Amenity()
+        self.assertEqual(obj.name, "")
+
     def tearDown(self):
         """Unset variables"""
         try:
