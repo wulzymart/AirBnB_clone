@@ -86,6 +86,26 @@ class BaseModelTest(unittest.TestCase):
         with self.assertRaises(TypeError):
             b.save(None)
 
+    def test_user_attr_email(self):
+        """tests the user attributes"""
+        obj = User()
+        self.assertEqual(obj.email, '')
+
+    def test_user_attr_password(self):
+        """tests the user password attribute"""
+        obj = User()
+        self.assertEqual(obj.password, '')
+
+    def test_user_attr_first_name(self):
+        """test user first_name attributes"""
+        obj = User()
+        self.assertEqual(obj.first_name, '')
+
+    def test_uset_attr_last_name(self):
+        """test user last_name attributes"""
+        obj = User()
+        self.assertEqual(obj.last_name, '')
+
     def tearDown(self):
         """Unset variables"""
         try:
