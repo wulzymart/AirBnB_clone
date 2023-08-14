@@ -98,6 +98,12 @@ class CityTest(unittest.TestCase):
         with self.assertRaises(TypeError):
             b.save(None)
 
+    def test_city_attr(self):
+        """test city object attributes"""
+        obj = City()
+        self.assertEqual(obj.name, "")
+        self.assertEqual(obj.state_id, "")
+
     def tearDown(self):
         """Unset variables"""
         try:
