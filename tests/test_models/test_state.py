@@ -98,6 +98,11 @@ class StateTest(unittest.TestCase):
         with self.assertRaises(TypeError):
             b.save(None)
 
+    def test_state_attr_name(self):
+        """test the state object name attr"""
+        obj = State()
+        self.assertEqual(obj.name, "")
+
     def tearDown(self):
         """Unset variables"""
         try:
