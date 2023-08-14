@@ -260,7 +260,8 @@ class TestConsole(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as output:
             q_id = f'"{id}"'
             HBNBCommand().onecmd(
-                f"""User.update({q_id}, {{'first_name': "John", "age": 89}})""")
+                f"""User.update({q_id}, {{'first_name': "John", "age":\
+ 89}})""")
             self.assertEqual(output.getvalue().strip(), '')
         with patch("sys.stdout", new=StringIO()) as output:
             HBNBCommand()\
