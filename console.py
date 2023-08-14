@@ -52,8 +52,8 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, line):
         """Catch commands if nothing else matches then."""
-        l = self.precmd(line)
-        self.onecmd(l)
+        ll = self.precmd(line)
+        self.onecmd(ll)
 
     def precmd(self, line):
         """Preliminary preparations before executing command"""
